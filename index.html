@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="description" content="A private, browser-based audio quality analysis workbench." />
+    <link rel="icon" href="data:," />
+    <title>SignalScope — Audio QA Lab</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to analysis</a>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="SignalScope home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+        <span>SignalScope</span>
+      </a>
+      <div class="privacy-pill"><span aria-hidden="true">●</span> Local processing only</div>
+    </header>
+
+    <main id="main-content">
+      <section class="hero" id="top">
+        <p class="eyebrow">BROWSER AUDIO QA WORKBENCH</p>
+        <h1>Find audio defects<br /><em>before listeners do.</em></h1>
+        <p class="hero-copy">Inspect clipping, silence, channel balance, signal offset, and stereo health without uploading your recording to a server.</p>
+        <div class="hero-tags" aria-label="Product capabilities">
+          <span>Web Audio API</span><span>TypeScript</span><span>Privacy-first</span><span>Accessible UI</span>
+        </div>
+      </section>
+
+      <section class="upload-card" aria-labelledby="upload-heading">
+        <div>
+          <p class="section-index">01 / INPUT</p>
+          <h2 id="upload-heading">Analyze a recording</h2>
+          <p>Drop an audio file here. Decoding and analysis stay inside this browser tab.</p>
+        </div>
+        <label class="drop-zone" id="drop-zone">
+          <input id="audio-file" type="file" accept="audio/*,.wav,.mp3,.m4a,.ogg,.flac" />
+          <span class="upload-icon" aria-hidden="true">↑</span>
+          <strong>Choose audio file</strong>
+          <small>or drag and drop · WAV, MP3, M4A, OGG</small>
+        </label>
+        <div class="demo-row">
+          <span>Don’t have a sample?</span>
+          <button id="load-demo" class="text-button" type="button">Run the engineered defect demo →</button>
+        </div>
+        <p id="status" class="status-message" role="status" aria-live="polite">Demo report loaded. Choose a file to analyze your own recording.</p>
+      </section>
+
+      <section class="dashboard" aria-labelledby="report-heading">
+        <div class="section-heading">
+          <div><p class="section-index">02 / REPORT</p><h2 id="report-heading">Signal health overview</h2></div>
+          <div class="export-actions">
+            <button id="export-json" class="secondary-button" type="button">Export JSON</button>
+            <button id="export-csv" class="secondary-button" type="button">Export findings CSV</button>
+          </div>
+        </div>
+
+        <div class="overview-grid">
+          <article class="score-card">
+            <div id="score-ring" class="score-ring" style="--score: 0" aria-label="Quality score">
+              <strong id="quality-score">—</strong><span>/ 100</span>
+            </div>
+            <div><p class="metric-label">QUALITY SCORE</p><h3 id="score-label">Analyzing</h3><p id="file-summary">Preparing the demonstration signal…</p></div>
+          </article>
+          <div class="metric-grid">
+            <article><p class="metric-label">DURATION</p><strong id="duration">—</strong><span id="sample-rate">—</span></article>
+            <article><p class="metric-label">PEAK LEVEL</p><strong id="peak">—</strong><span id="clip-count">—</span></article>
+            <article><p class="metric-label">RMS LEVEL</p><strong id="rms">—</strong><span id="crest-factor">—</span></article>
+            <article><p class="metric-label">STEREO BALANCE</p><strong id="balance">—</strong><span id="correlation">—</span></article>
+          </div>
+        </div>
+
+        <article class="waveform-card">
+          <div class="card-heading">
+            <div><p class="metric-label">TIMELINE</p><h3>Waveform and issue markers</h3></div>
+            <div class="legend" aria-label="Marker legend"><span><i class="critical"></i> Clipping</span><span><i class="warning"></i> Warning</span></div>
+          </div>
+          <canvas id="waveform" height="240" aria-describedby="waveform-description"></canvas>
+          <p id="waveform-description" class="visually-hidden">A waveform overview with colored vertical markers corresponding to timestamped findings in the table below.</p>
+          <div class="timeline-labels" aria-hidden="true"><span>0:00</span><span id="mid-time">—</span><span id="end-time">—</span></div>
+        </article>
+
+        <article class="findings-card">
+          <div class="card-heading">
+            <div><p class="metric-label">DIAGNOSTICS</p><h3>Timestamped findings</h3></div>
+            <span id="finding-count" class="count-pill">0 findings</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th scope="col">Severity</th><th scope="col">Time</th><th scope="col">Finding</th><th scope="col">Technical detail</th></tr></thead>
+              <tbody id="findings-body"></tbody>
+            </table>
+          </div>
+          <div id="no-findings" class="no-findings" hidden><span aria-hidden="true">✓</span><strong>No configured issues detected</strong><p>This is a screening result, not a guarantee of perceptual quality.</p></div>
+        </article>
+      </section>
+
+      <section class="method" aria-labelledby="method-heading">
+        <div><p class="section-index">03 / ENGINEERING NOTES</p><h2 id="method-heading">Built to make the analysis auditable.</h2></div>
+        <div class="method-grid">
+          <article><span>01</span><h3>Deterministic DSP</h3><p>Every finding comes from documented thresholds and testable signal math—no opaque model or invented certainty.</p></article>
+          <article><span>02</span><h3>Local by default</h3><p>Files are decoded with the Web Audio API and never leave the browser. There is no backend or telemetry.</p></article>
+          <article><span>03</span><h3>Portable evidence</h3><p>Export structured JSON for systems work or a concise CSV findings list for editors and QA teams.</p></article>
+        </div>
+      </section>
+    </main>
+
+    <footer><span>SignalScope · portfolio engineering prototype</span><span>TypeScript · Web Audio API · Canvas</span></footer>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+name: Bug report
+description: Report reproducible incorrect behavior.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Do not attach private recordings. Describe or generate a minimal synthetic reproduction when possible.
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Observed behavior
+      description: What happened, and what did you expect instead?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Include steps, browser/OS, sample rate, channel count, and a synthetic buffer description.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: SignalScope version or commit
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional technical details
